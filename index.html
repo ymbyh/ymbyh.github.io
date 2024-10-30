@@ -69,6 +69,401 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-IO流" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/10/30/IO%E6%B5%81/" class="article-date">
+  <time class="dt-published" datetime="2024-10-30T15:49:45.000Z" itemprop="datePublished">2024-10-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/10/30/IO%E6%B5%81/">IO流</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="IO流"><a href="#IO流" class="headerlink" title="#IO流"></a>#IO流</h2><p>##总览</p>
+<p>流的分类：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>分类1</th>
+<th>分类2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单位</td>
+<td>字节流</td>
+<td>字符流</td>
+</tr>
+<tr>
+<td>流向</td>
+<td>输入流</td>
+<td>输出流</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>节点流</td>
+<td>处理流</td>
+</tr>
+</tbody></table>
+<p>流与流之间的转换关系：</p>
+<p><img src="http://7xj2yt.com1.z0.glb.clouddn.com/java_IO%E6%B5%81.png" alt="转换"></p>
+<p>###IO流图</p>
+<table>
+<thead>
+<tr>
+<th>流名称</th>
+<th>字节输入</th>
+<th>字节输出</th>
+<th>字符输入</th>
+<th>字符输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4大基类</td>
+<td>InputStream</td>
+<td>OutputStream</td>
+<td>Reader</td>
+<td>Writer</td>
+</tr>
+<tr>
+<td><strong>文件流</strong></td>
+<td>FileInputStream</td>
+<td>FileOutputStream</td>
+<td>FileReader</td>
+<td>FileWriter</td>
+</tr>
+<tr>
+<td><strong>转换流</strong></td>
+<td>-</td>
+<td>-</td>
+<td>InputStreamReader</td>
+<td>OutputStreamWriter</td>
+</tr>
+<tr>
+<td>System</td>
+<td>System.in</td>
+<td>System.out</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>打印流</td>
+<td>-</td>
+<td>PrintStream</td>
+<td>-</td>
+<td>PrintWriter</td>
+</tr>
+<tr>
+<td><strong>缓存流</strong></td>
+<td>BufferedInputStream</td>
+<td>BufferedOutputStream</td>
+<td>BufferedReader</td>
+<td>BufferedWriter</td>
+</tr>
+<tr>
+<td>数据流</td>
+<td>DataInputStream</td>
+<td>DataOutputStream</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>内存流</strong></td>
+<td>ByteArrayInputStream</td>
+<td>ByteArrayOutputStream</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>对象流</td>
+<td>ObjectInputStream</td>
+<td>ObjectOutputStream</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>随机访问流</td>
+<td>-</td>
+<td>RandomAccessFile</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<hr>
+<p>###IO流类思维导图<br><img src="http://7xj2yt.com1.z0.glb.clouddn.com/java_IO.bmp" alt="IO流类思维导图"></p>
+<hr>
+<p>##四大抽象类</p>
+<h3 id="InputStream"><a href="#InputStream" class="headerlink" title="InputStream"></a>InputStream</h3><blockquote>
+<p>说明：继承自InputStream的流都是用于向程序中输入数据的，且数据的单位为字节(8位)</p>
+</blockquote>
+<p>核心方法：</p>
+<pre><code>public abstract int read()	//从输入流中读取数据的下一个字节, 返回读到的字节值.若遇到流的末尾,返回-1
+public int read(byte[] b)	//从输入流中读取 b.length 个字节的数据并存储到缓冲区数组b中.返回的是实际读到的字节总数
+public int read(byte[] b, int off, int len)	//读取 len 个字节的数据,并从数组b的off位置开始写入到这个数组中
+public void close()	//关闭此输入流并释放与此流关联的所有系统资源
+public int available()	//返回此输入流下一个方法调用可以不受阻塞地从此输入流读取（或跳过）的估计字节数
+public long skip(long n)	//跳过和丢弃此输入流中数据的 n 个字节，返回实现路过的字节数。
+</code></pre>
+<h3 id="OutputStream"><a href="#OutputStream" class="headerlink" title="OutputStream"></a>OutputStream</h3><blockquote>
+<p>说明：继承自OutputStream的流是程序用于向外输出数据的，且数据的单位为字节(8位)</p>
+</blockquote>
+<p>核心方法：</p>
+<pre><code>public abstract void write(int b)	//将指定的字节写入此输出流
+public void write(byte[] b)	//将 b.length 个字节从指定的 byte 数组写入此输出流
+public void write(byte[] b, int off, int len)	//将指定 byte 数组中从偏移量 off 开始的 len 个字节写入此输出流
+public void flush()	//刷新此输出流并强制写出所有缓冲的输出字节
+pulbic void close()	//关闭此输出流并释放与此流有关的所有系统资源
+</code></pre>
+<h3 id="Reader"><a href="#Reader" class="headerlink" title="Reader"></a>Reader</h3><blockquote>
+<p>说明：继承自Reader的流都是用于向程序中输入数据的，且数据的单位为字符(16位)</p>
+</blockquote>
+<p>核心方法：</p>
+<pre><code>public int read()	//读取单个字符的编码，返回作为整数读取的字符，如果已到达流的末尾返回-1
+public int read(char[] cbuf)		//将字符读入数组，返回读取的字符数
+public abstract int read(char[] cbuf, int off, int len)	//读取 len 个字符的数据，并从数组cbuf的off位置开始写入到这个数组中
+public abstract void close()	//关闭该流并释放与之关联的所有资源
+public long skip(long n) 	//跳过n个字符
+int available() 	//还可以有多少能读到的字节数
+</code></pre>
+<h3 id="Writer"><a href="#Writer" class="headerlink" title="Writer"></a>Writer</h3><blockquote>
+<p>说明：继承自Writer的流是程序用于向外输出数据的，且数据的单位为字符(16位)</p>
+</blockquote>
+<p>核心方法：</p>
+<pre><code>public void write(int c)		//写入单个字符
+public void write(char[] cbuf)	//写入字符数组
+public abstract void write(char[] cbuf, int off, int len)	//写入字符数组的某一部分
+public void write(String str)	//写入字符串
+public void write(String str, int off, int len)	//写字符串的某一部分
+public abstract void close()	//关闭此流，但要先刷新它
+public abstract void flush()	//刷新该流的缓冲，将缓冲的数据全写到目的地
+</code></pre>
+<hr>
+<p>##节点流<br>###文件流</p>
+<blockquote>
+<p>说明：文件流主要用来操作文件</p>
+</blockquote>
+<ul>
+<li><p><strong>FileInputStream</strong>:继承自InputStream</p>
+</li>
+<li><p><strong>FileOutputStream</strong>继承自OutputStream<br>FileOutputStream(String name, boolean append)  指定文件名和是否以追回方式写入</p>
+</li>
+<li><p><strong>FileReader</strong>继承自Reader<br>核心方法:</p>
+<pre><code>1、构造方法
+    FileReader(File file)
+    FileReader(String fileName)
+2、成员方法
+    int read()	//每次读取一个字符，末尾-1返回值就是读入的内容
+    int read(char[] cbuf)	//每次读取一组字符，最多读数组长度个，末尾-1返回值实际读取的个数
+    int read(char[] cbuf,int off, int len)	//每次读取一组字符，最多len个，数据存入数组从off开始，末尾-1返回值实际读取的个数
+    void close()
+</code></pre>
+</li>
+<li><p><strong>FileWriter</strong>继承自Writer<br>核心方法:</p>
+<pre><code>1、构造方法
+    FileWriter(File file)
+    FileWriter(File file,  boolean append)
+    FileWriter(String fileName)
+    FileWriter(String fileName, boolean append)	//构造方法来指定是否使用追加模式
+2、成员方法
+    void write(int c) 
+    void write(char[] cbuf,int off, int len)
+    void write(String str, int off,  int len)
+    void flush()
+    void close()
+</code></pre>
+</li>
+</ul>
+<p>###内存流</p>
+<blockquote>
+<p>说明：内存流主要用来操作内存，输入和输出可以从文件中来，也可以将设置在内存之上（内存：相当于长度可变的字节数组）</p>
+</blockquote>
+<p>分类：<br><strong>ByteArrayInputStream</strong>类：主要完成将内容从内存读入程序之中</p>
+<pre><code>数据&lt;&lt;&lt;---------ByteArrayInputStream&lt;&lt;&lt;---------内存
+</code></pre>
+<p>构造方法：</p>
+<pre><code>ByteArrayInputStream（byte[] b）
+ByteArrayInputStream(byte[] b,int off,int len)
+</code></pre>
+<p>常用方法：</p>
+<pre><code>read()
+skip()
+available()
+</code></pre>
+<p><strong>ByteArrayOutputStream</strong>类：主要是将数据写入到内存中</p>
+<pre><code>数据---------&gt;&gt;&gt;ByteArrayOutputStream---------&gt;&gt;&gt;内存
+</code></pre>
+<p>构造方法：</p>
+<pre><code>ByteArrayOutputStream（）
+ByteArrayOutputStream（int size） ：指定缓冲区大小（byte）
+</code></pre>
+<p>常用方法：</p>
+<pre><code>byte[] toByteArray():将内存流转换为字节数组
+toString（）
+write（int）
+write（byte[] bytes）
+write（byte[] bytes ，int off，int len） 
+writeTo（OutputStream）
+</code></pre>
+<p><strong>注意：内存流不需要关闭</strong></p>
+<p>##处理流(过滤流)<br>###缓冲流</p>
+<blockquote>
+<p>说明：缓冲流是处理流的一种,建立在相应的节点流之上，对读写的数据提供了缓冲的功能，提高了读写的效率，还增加了一些新的方法</p>
+</blockquote>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>1、对于缓冲输出流，写出的数据会先缓存在内存缓冲区中，关闭此流前要用flush()方法将缓存区的数据立刻写出</li>
+<li>2、关闭过滤流时，会自动关闭过滤流所包装的所有底层流</li>
+</ul>
+<p><strong>BufferedInputStream</strong> 可以对任何的InputStream流进行包装</p>
+<p><strong>BufferedOutputStream</strong> 可以对任何的OutputStream流进行包装</p>
+<p><strong>BufferedReader</strong> 可以对任何的Reader流进行包装</p>
+<blockquote>
+<p>新增了readLine()方法用于一次读取一行字符串(以‘\r’或‘\n’认为一行结束)返回一行 如果没有返回null</p>
+</blockquote>
+<p><strong>BufferedWriter</strong> 可以对任何的Writer流进行包装</p>
+<blockquote>
+<p>新增了newLine()方法，用于跨平台的写入换行符</p>
+</blockquote>
+<p>###Object流</p>
+<blockquote>
+<p>说明：JDK提供的ObjectOutputStream和ObjectInputStream类是用于存储和读取基本数据类型或对象的过滤流</p>
+</blockquote>
+<p><strong>序列化</strong>：用ObjectOutputStream类保存基本数据类型或对象的机制叫序列化</p>
+<p><strong>反序列化</strong>：用ObjectInputStream类读取基本数据类型或对象的机制叫反序列化</p>
+<p><strong>Serializable接口</strong></p>
+<pre><code>作用：能被序列化的对象所对应的类必须实现java.io.Serializable这个标识性接口
+注意：实现此接口的类，需要提供一个静态long类型的常量serialVersionUID，保证序列化与反序列化的一致性
+</code></pre>
+<p><strong>构造方法</strong>:</p>
+<pre><code>public ObjectOutputStream(OutputStream out)
+public ObjectInputStream(InputStream in)
+</code></pre>
+<p><strong>transient关键字</strong>:</p>
+<pre><code>transient关键字修饰成员变量时，表示这个成员变量是不需要序列化的
+static修饰的成员变量也不会被序列化
+</code></pre>
+<p>###打印流</p>
+<blockquote>
+<p>说明：向控制台输出数据</p>
+</blockquote>
+<p>PrintStream类：字节输出流</p>
+<p>PrintWriter类：字符输出流</p>
+<p>打印流示例（<strong>注意：write写入的是字节</strong>）：</p>
+<pre><code>PrintStream ps = new PrintStream(&quot;src/print.txt&quot;);
+    ps.write(355);// 字节 00000000 00000000 00000001 01100011
+                    // 舍弃前三位---》01100011--》c
+    ps.println(355);
+    ps.flush();
+    ps.close();
+</code></pre>
+<p><strong>注意</strong></p>
+<pre><code>System.out就是PrintStream的一个实例
+PrintStream和PrintWriter的输出操作不会抛出异常
+</code></pre>
+<p>构造方法:</p>
+<pre><code>PrintStream(OutputStream out)
+PrintStream(OutputStream out, boolean autoFlush)
+PrintWriter(Writer out)
+PrintWriter(Writer out, boolean autoFlush)
+PrintWriter(OutputStream out)
+PrintWriter(OutputStream out, boolean autoFlush)
+</code></pre>
+<p>###转换流</p>
+<blockquote>
+<p>作用：转换流用于在字节流和字符流之间转换。</p>
+</blockquote>
+<p>分类：</p>
+<ul>
+<li><p><strong>InputStreamReader</strong>类</p>
+<pre><code>1）是Reader的子类，将输入的字节流变为字符流，即将一个字节流的输入对象变为字符流的输入对象
+2）InputStreamReader需要和InputStream“套接”，它可以将字节流中读入的字节解码成字符
+</code></pre>
+</li>
+<li><p><strong>OutputStreamWriter</strong>类</p>
+<pre><code>1）是Writer的子类，将输出的字符流变为字节流，即将一个字符流的输出对象变为字节流的输出对象
+2）OutputStreamWriter需要和OutputStream“套接”，它可以将要写入字节流的字符编码成字节
+</code></pre>
+</li>
+</ul>
+<p>转换过程：</p>
+<ul>
+<li><p>写入数据</p>
+<pre><code>程序---&gt;&gt;字符数据---&gt;&gt;字符流---&gt;&gt;OutputStreamWriter---&gt;&gt;字节流---&gt;&gt;文件
+</code></pre>
+</li>
+<li><p>读出数据</p>
+<pre><code>  程序&lt;&lt;---字符数据&lt;&lt;---字符流&lt;&lt;----InputStreamReader&lt;&lt;---字节流&lt;&lt;---文件
+</code></pre>
+</li>
+</ul>
+<p>###数据流</p>
+<p><strong>DataInputStream</strong>类</p>
+<blockquote>
+<p>作用：读取简单数据类型和字符串</p>
+</blockquote>
+<p>核心方法:</p>
+<pre><code>readInt() 读取一个基本数据类型数据
+readInt() 读取一个基本数据类型数据
+</code></pre>
+<p><strong>DataOutputStream</strong>类</p>
+<blockquote>
+<p>作用：写出简单数据类型和字符串</p>
+</blockquote>
+<p>核心方法:</p>
+<pre><code>writeInt(int i)
+writeUTF(String s) 写入UTF-8编码的字符串
+</code></pre>
+<p>##RandomAccessFile类(随机访问文件)</p>
+<blockquote>
+<p>作用：完成随机读取功能，可以读取指定位置的内容</p>
+</blockquote>
+<p>构造方法：</p>
+<pre><code>public RandomAccessFile(File file,  String mode) 
+public RandomAccessFile(File file,  String mode) 
+</code></pre>
+<p>文件的打开模式</p>
+<pre><code>“r” 以只读方式打开。调用结果对象的任何 write 方法都将导致抛出 IOException。  
+“rw” 打开以便读取和写入。如果该文件尚不存在，则尝试创建该文件。  
+</code></pre>
+<p>常用方法:</p>
+<pre><code>getFilePointer():返回子文件中当前的偏移量	
+seek(long l):设置到此文件开头测量到的文件的偏移量 在该位置的下一个发生读、写操作
+</code></pre>
+<p>注意：</p>
+<pre><code>RandomAccessFile raf = new RandomAccessFile(&quot;src/per.txt&quot;, &quot;rw&quot;);
+//这里遍历的时候需注意要用getFilePointer()读取光标的位置
+for (int i = 0; i &lt; raf.length(); i = (int) raf.getFilePointer()) &#123;
+    //do ...			
+&#125;
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/10/30/IO%E6%B5%81/" data-id="cm2w1zkd600028otg6ycj1mdr" data-title="IO流" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-异常处理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/10/30/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" class="article-date">
@@ -214,7 +609,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/30/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" data-id="cm2w1s15i0001fctgdcv86jg5" data-title="异常处理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/30/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" data-id="cm2w1zkd900038otg3qxz4d3g" data-title="异常处理" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -421,7 +816,7 @@ return super;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/30/%E6%A6%82%E5%BF%B5%E5%8C%BA%E5%88%AB/" data-id="cm2w1s15n0002fctgdggeb8qc" data-title="概念区别" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/30/%E6%A6%82%E5%BF%B5%E5%8C%BA%E5%88%AB/" data-id="cm2w1zkd500018otgdp9v75y3" data-title="概念区别" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -555,7 +950,7 @@ return super;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/30/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" data-id="cm2w1s15o0003fctg7nvk3ywx" data-title="面向对象" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/30/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" data-id="cm2w1zkda00048otgdmkiaokf" data-title="面向对象" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -606,7 +1001,7 @@ return super;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/10/30/hello-world/" data-id="cm2w1s15e0000fctgbd6xa38m" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/10/30/hello-world/" data-id="cm2w1zkd100008otgc2wh3ylv" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -647,6 +1042,10 @@ return super;
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2024/10/30/IO%E6%B5%81/">IO流</a>
+          </li>
         
           <li>
             <a href="/2024/10/30/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">异常处理</a>
