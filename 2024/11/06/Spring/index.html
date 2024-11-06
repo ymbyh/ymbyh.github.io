@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spring | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Spring 基本概念SpringSpring 是用于开发 Java 应用程序的开源框架，为解决企业应用开发的复杂性而创建。  Spring 的基本设计思想是利用 IOC（依赖注入）和 AOP （面向切面）解耦应用组件，降低应用程序各组件之间的耦合度。 在这两者的基础上，Spring 逐渐衍生出了其他的高级功能：如 Security，JPA 等。  Spring MVCSpring MVC 是 S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring">
+<meta property="og:url" content="http://example.com/2024/11/06/Spring/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Spring 基本概念SpringSpring 是用于开发 Java 应用程序的开源框架，为解决企业应用开发的复杂性而创建。  Spring 的基本设计思想是利用 IOC（依赖注入）和 AOP （面向切面）解耦应用组件，降低应用程序各组件之间的耦合度。 在这两者的基础上，Spring 逐渐衍生出了其他的高级功能：如 Security，JPA 等。  Spring MVCSpring MVC 是 S">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-06T13:30:43.000Z">
+<meta property="article:modified_time" content="2024-11-06T13:31:10.087Z">
+<meta property="article:author" content="Camellia">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="douban.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">Camellia</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">Home</a></li>
+				        
+							<li><a href="/archives">Archives</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/ymbyh/" title="github">github</a>
+					        
+						</div>
+						<!-- music -->
+						
+							<!-- <div style="position: absolute; bottom: 120px; left: auto; width: 85%;"> -->
+							<div style="position: absolute; left: auto; width: 85%;">
+								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=220 height=86 src="//music.163.com/outchain/player?type=2&id=32717172&auto=1&height=66"></iframe>
+							</div>
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/ymbyh/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="douban.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">Home</a></li>
+		        
+					<li><a href="/archives">Archives</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/ymbyh/" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Spring" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2024/11/06/Spring/" class="article-date">
+  	<time datetime="2024-11-06T13:30:43.000Z" itemprop="datePublished">2024-11-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><hr>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="Spring-1"><a href="#Spring-1" class="headerlink" title="Spring"></a>Spring</h3><p>Spring 是用于开发 Java 应用程序的开源框架，为解决企业应用开发的复杂性而创建。</p>
+<ol>
+<li>Spring 的基本设计思想是利用 IOC（依赖注入）和 AOP （面向切面）解耦应用组件，降低应用程序各组件之间的耦合度。</li>
+<li>在这两者的基础上，Spring 逐渐衍生出了其他的高级功能：如 Security，JPA 等。</li>
+</ol>
+<h3 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h3><p>Spring MVC 是 Spring 的子功能模块，专用于 Web 开发。</p>
+<p>Spring MVC 基于 Servlet 实现，将 Web 应用中的数据业务、显示逻辑和控制逻辑进行分层设计。开发者可以直接调用 Spring MVC 框架中 Spring 解耦的组件，快速构建 Web 应用。</p>
+<h3 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h3><p>Spring Boot 是用于简化创建 Spring 项目配置流程，快速构建 Spring 应用程序的辅助工具。Spring Boot 本身并不提供 Spring 框架的核心特性以及扩展功能。但 在创建 Spring 项目时，Spring Boot 可以：</p>
+<ol>
+<li>自动添加 Maven 依赖，不需要在 pom.xml 中手动添加配置依赖。</li>
+<li>不需要配置 XML 文件，将全部配置浓缩在一个 appliaction.yml 配置文件中。</li>
+<li>自动创建启动类，代表着本工程项目和服务器的启动加载。</li>
+<li>内嵌 Tomcat 、Jetty 等容器，无需手动部署 war 文件。</li>
+</ol>
+<hr>
+<h2 id="Spring-Boot-配置"><a href="#Spring-Boot-配置" class="headerlink" title="Spring Boot 配置"></a>Spring Boot 配置</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><p>在Spring Boot中，引入的所有包都是 starter 形式：</p>
+<p>spring-boot-starter-web-services，针对 SOAP Web Services<br>spring-boot-starter-web，针对 Web 应用与网络接口<br>spring-boot-starter-jdbc，针对 JDBC<br>spring-boot-starter-data-jpa，基于 Hibernate 的持久层框架<br>spring-boot-starter-cache，针对缓存支持</p>
+<h3 id="默认映射路径"><a href="#默认映射路径" class="headerlink" title="默认映射路径"></a>默认映射路径</h3><ul>
+<li><code>classpath:/META-INF/resources/</code></li>
+<li><code>classpath:/resources/</code></li>
+<li><code>classpath:/static/</code></li>
+<li><code>classpath:/public/</code></li>
+</ul>
+<p>优先级顺序：META-INF&#x2F;resources &gt; resources &gt; static &gt; public</p>
+<h3 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h3><p>位于 resources 文件夹下，支持以下两种格式。由 Spring Boot 自动加载。</p>
+<ol>
+<li>application.properties</li>
+<li>application.yml</li>
+</ol>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#端口号</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8080</span></span><br><span class="line"><span class="comment">#访问前缀</span></span><br><span class="line"><span class="attr">server.servlet.context-path</span>=<span class="string">/demo</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#数据库驱动</span></span><br><span class="line"><span class="attr">jdbc.driver</span>=<span class="string">com.mysql.jc.jdbc.Driver</span></span><br><span class="line"><span class="comment">#数据库链接</span></span><br><span class="line"><span class="attr">jdbc.url</span>=<span class="string">jdbc:mysql://localhost:3306/demo?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="comment">#数据库用户名</span></span><br><span class="line"><span class="attr">jdbc.username</span>=<span class="string">root</span></span><br><span class="line"><span class="comment">#数据库密码</span></span><br><span class="line"><span class="attr">jdbc.password</span>=<span class="string">wdh19970506</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#Mybatis</span></span><br><span class="line"><span class="comment">#配置文件路径</span></span><br><span class="line"><span class="attr">mybatis_config_file</span>=<span class="string">mybatis-config.xml</span></span><br><span class="line"><span class="comment">#SQL语句配置路径</span></span><br><span class="line"><span class="attr">mapper_path</span>=<span class="string">/mapper/**.xml</span></span><br><span class="line"><span class="comment">#实体类所在包</span></span><br><span class="line"><span class="attr">type_alias_package</span>=<span class="string">com.example.demo.entity</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>JDBC 连接 Mysql5 驱动： com.mysql.jdbc.Driver</li>
+<li>JDBC 连接 Mysql6 驱动： com.mysql.cj.jdbc.Driver , URL 必须要指定时区 serverTimezone ！</li>
+</ul>
+<p><strong>多重配置</strong></p>
+<p>在 Spring Boot 中，我们往往需要配置多个不同的配置文件去适应不同的环境：</p>
+<ul>
+<li><code>application-dev.properties</code> 开发环境</li>
+<li><code>application-test.properties</code> 测试环境</li>
+<li><code>application-prod.properties</code> 生产环境</li>
+</ul>
+<p>只需要在程序默认配置文件 <code>application.properties</code> 中设置环境，就可以使用指定的配置。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.profiles.active</span>=<span class="string">dev</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="启动类"><a href="#启动类" class="headerlink" title="启动类"></a>启动类</h3><p><code>@SpringBootApplication</code> 类：作为程序入口，在创建 Spring Boot 项目时自动创建。</p>
+<p>等同于 <code>@Configuration</code> + <code>@EnableAutoConfiguration</code> + <code>@ComponentScan</code> ，会自动完成配置并扫描路径下所有包。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Spring 需要定义调度程序 servlet ，映射和其他支持配置。我们可以使用 web.xml 文件或 Initializer 类来完成此操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyWebAppInitializer</span> <span class="keyword">implements</span> <span class="title class_">WebApplicationInitializer</span> &#123;</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onStartup</span><span class="params">(ServletContext container)</span> &#123;</span><br><span class="line">        <span class="type">AnnotationConfigWebApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationConfigWebApplicationContext</span>();</span><br><span class="line">        context.setConfigLocation(<span class="string">&quot;com.pingfangushi&quot;</span>);</span><br><span class="line">          container.addListener(<span class="keyword">new</span> <span class="title class_">ContextLoaderListener</span>(context));</span><br><span class="line">          ServletRegistration.<span class="type">Dynamic</span> <span class="variable">dispatcher</span> <span class="operator">=</span> container</span><br><span class="line">          .addServlet(<span class="string">&quot;dispatcher&quot;</span>, <span class="keyword">new</span> <span class="title class_">DispatcherServlet</span>(context));</span><br><span class="line">        dispatcher.setLoadOnStartup(<span class="number">1</span>);</span><br><span class="line">        dispatcher.addMapping(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还需要将 <code>@EnableWebMvc</code> 注释添加到 <code>@Configuration</code> 类，并定义一个视图解析器来解析从控制器返回的视图：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWebMvc</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClientWebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123; </span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> ViewResolver <span class="title function_">viewResolver</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">InternalResourceViewResolver</span> <span class="variable">bean</span></span><br><span class="line">        <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InternalResourceViewResolver</span>();</span><br><span class="line">      bean.setViewClass(JstlView.class);</span><br><span class="line">      bean.setPrefix(<span class="string">&quot;/WEB-INF/view/&quot;</span>);</span><br><span class="line">      bean.setSuffix(<span class="string">&quot;.jsp&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> bean;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/10/31/JDBC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JDBC</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2024 Camellia
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
