@@ -188,7 +188,6 @@
       
         <h1 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h1><h2 id="IOC-原理"><a href="#IOC-原理" class="headerlink" title="IOC 原理"></a>IOC 原理</h2><h3 id="代码耦合"><a href="#代码耦合" class="headerlink" title="代码耦合"></a>代码耦合</h3><p>实际开发中，我们如果在对象 A 内部去创建、修改或者注销另一个对象 B，这会导致对象之间非常复杂的依赖关系，不利于代码的维护更新。</p>
 <p>比如我们直接在上层类内调用了底层类的构造方法，一旦底层类的构造方法发生改变，就必须修改所有上层类的代码。</p>
-<p><img src="/%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB.png"></p>
 <h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><p>( Dependency Injection ) 我们用依赖注入的方式来降低耦合度。所谓依赖注入，就是把底层对象作为参数传入上层对象。避免底层类被修改后上层类代码也要随之改动。我们一般通过构造方法或者 setter 方法注入底层对象。</p>
 <ol>
 <li><p>设值注入：依赖的对象通过 setter 方法传入的，对象已经实例化，发生属性填充和依赖注入的时候。</p>
@@ -197,7 +196,6 @@
 </li>
 </ol>
 <p><em>主要采用设值注入，性能更好更易读。但对于依赖关系无需变化的 Bean 采用构造注入。所有的依赖关系全部在构造器内设定。</em></p>
-<p><img src="/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.png"></p>
 <p>优势：使用依赖注入后，即使底层类发生变化，上层类代码也不必改动，大大降低了代码的耦合度。</p>
 <p>劣势：但这也导致了我们在初始化对象的过程中要书写复杂的代码。</p>
 <h3 id="控制反转"><a href="#控制反转" class="headerlink" title="控制反转"></a>控制反转</h3><p>( Inversion of Control ) 控制反转，将对象的管理权交给 IOC 容器。</p>
@@ -227,7 +225,6 @@
 <li>解析：读 xml 配置，扫描类文件，从配置或者注解中获取 Bean 的定义信息，注册一些扩展功能。</li>
 <li>加载：通过解析完的定义信息获取 Bean 实例。</li>
 </ol>
-<p><img src="/bean.png"></p>
 <p>获取 BeanName，对传入的 name 进行解析，转化为可以从 Map 中获取到 BeanDefinition 的 bean name。<br>合并 Bean 定义，对父类的定义进行合并和覆盖，如果父类还有父类，会进行递归合并，以获取完整的 Bean 定义信息。<br>实例化，使用构造或者工厂方法创建 Bean 实例。<br>属性填充，寻找并且注入依赖，依赖的 Bean 还会递归调用 getBean 方法获取。<br>初始化，调用自定义的初始化方法。<br>获取最终的 Bean，如果是 FactoryBean 需要调用 getObject 方法，如果需要类型转换调用 TypeConverter 进行转化。</p>
 <h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>三个类 A、B、C，然后 A 关联 B，B 关联 C，C 又关联 A，这就形成了一个循环依赖。如果是方法调用是不算循环依赖的，循环依赖必须要持有引用。</p>
 <ol>
@@ -238,7 +235,6 @@
 <li>设值循环依赖。依赖的对象是通过 setter 方法传入的，对象已经实例化，发生属性填充和依赖注入的时候。</li>
 </ol>
 <p>Spring 框架只支持单例下的设值循环依赖。原型模式检测到循环依赖会直接抛出 BeanCurrentlyInCreationException 异常。</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9ea61d204559">https://www.jianshu.com/p/9ea61d204559</a></p>
 <hr>
 <h2 id="IOC-注解详解"><a href="#IOC-注解详解" class="headerlink" title="IOC 注解详解"></a>IOC 注解详解</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>为类添加 <code>@Configuration</code> 注解，表示该类为配置类。起到类似 XML 文件的作用，配置 IOC 容器用来管理 Bean。</p>
 <h4 id="组件扫描"><a href="#组件扫描" class="headerlink" title="组件扫描"></a>组件扫描</h4><p>为配置类添加 <code>@ComponentScan</code> 注解，启用组件扫描。配置类将根据注解向 IOC 容器添加 Bean，默认扫描本类中的 @Bean 方法。</p>
