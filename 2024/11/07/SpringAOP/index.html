@@ -16,12 +16,10 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Spring AOP AOP 原理面向切面( Aspect Orient Programming ) 面向切面编程，是面向对象编程(OOP) 的一种补充。 在 Java 程序自上而下处理主业务时，也会经常处理一些和主业务逻辑无关的问题（比如在接收用户访问请求时，计算程序响应该请求的运行时间）。这些代码如果和主逻辑代码混淆，会导致后期难以维护。 AOP 就是将这些横切性问题和主逻辑解耦。保证开发者不">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/filter.png">
 <meta property="article:published_time" content="2024-11-07T02:51:39.000Z">
-<meta property="article:modified_time" content="2024-11-07T02:52:18.862Z">
+<meta property="article:modified_time" content="2024-11-07T02:56:40.824Z">
 <meta property="article:author" content="Camellia">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/filter.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -348,8 +346,11 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>                                                                <span class="comment">// 作为组件，交给容器处理</span></span><br><span class="line"><span class="meta">@ServletComponentScan</span>                                                     <span class="comment">// 扫描组件</span></span><br><span class="line"><span class="meta">@WebFilter(urlPatterns = &quot;/login/*&quot;,filterName = &quot;loginFilter&quot;)</span>           <span class="comment">// 设定过滤路径和名称</span></span><br><span class="line"><span class="meta">@Order(1)</span>                                                                 <span class="comment">// 设定优先级（值小会优先执行）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        <span class="comment">// 过滤器前执行</span></span><br><span class="line">        System.out.println(<span class="string">&quot;before&quot;</span>);</span><br><span class="line">        <span class="comment">// 执行内部逻辑</span></span><br><span class="line">        filterChain.doFilter(servletRequest,servletResponse);</span><br><span class="line">        <span class="comment">// 过滤器后执行</span></span><br><span class="line">        System.out.println(<span class="string">&quot;after&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-<p><strong>调用顺序</strong></p>
-<p><img src="/filter.png" alt="filter"></p>
+
+
+
+
+
 
       
     </div>
@@ -358,6 +359,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2024/11/07/SpringIOC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          &#39;SpringIOC&#39;
+        
+      </div>
+    </a>
   
   
     <a href="/2024/11/06/Spring/" id="article-nav-older" class="article-nav-link-wrap">

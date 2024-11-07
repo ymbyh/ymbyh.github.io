@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>&#39;SpringIOC&#39; | Hexo</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Spring IOCIOC 原理代码耦合实际开发中，我们如果在对象 A 内部去创建、修改或者注销另一个对象 B，这会导致对象之间非常复杂的依赖关系，不利于代码的维护更新。 比如我们直接在上层类内调用了底层类的构造方法，一旦底层类的构造方法发生改变，就必须修改所有上层类的代码。  依赖注入( Dependency Injection ) 我们用依赖注入的方式来降低耦合度。所谓依赖注入，就是把底层对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&#39;SpringIOC&#39;">
+<meta property="og:url" content="http://example.com/2024/11/07/SpringIOC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Spring IOCIOC 原理代码耦合实际开发中，我们如果在对象 A 内部去创建、修改或者注销另一个对象 B，这会导致对象之间非常复杂的依赖关系，不利于代码的维护更新。 比如我们直接在上层类内调用了底层类的构造方法，一旦底层类的构造方法发生改变，就必须修改所有上层类的代码。  依赖注入( Dependency Injection ) 我们用依赖注入的方式来降低耦合度。所谓依赖注入，就是把底层对象">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="http://example.com/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.png">
+<meta property="og:image" content="http://example.com/bean.png">
+<meta property="article:published_time" content="2024-11-07T02:57:58.000Z">
+<meta property="article:modified_time" content="2024-11-07T02:58:25.901Z">
+<meta property="article:author" content="Camellia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="douban.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">Camellia</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">Home</a></li>
+				        
+							<li><a href="/archives">Archives</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/ymbyh/" title="github">github</a>
+					        
+						</div>
+						<!-- music -->
+						
+							<!-- <div style="position: absolute; bottom: 120px; left: auto; width: 85%;"> -->
+							<div style="position: absolute; left: auto; width: 85%;">
+								<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=220 height=86 src="//music.163.com/outchain/player?type=2&id=32717172&auto=1&height=66"></iframe>
+							</div>
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/ymbyh/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="douban.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">Home</a></li>
+		        
+					<li><a href="/archives">Archives</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/ymbyh/" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-SpringIOC" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2024/11/07/SpringIOC/" class="article-date">
+  	<time datetime="2024-11-07T02:57:58.000Z" itemprop="datePublished">2024-11-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      &#39;SpringIOC&#39;
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h1><h2 id="IOC-原理"><a href="#IOC-原理" class="headerlink" title="IOC 原理"></a>IOC 原理</h2><h3 id="代码耦合"><a href="#代码耦合" class="headerlink" title="代码耦合"></a>代码耦合</h3><p>实际开发中，我们如果在对象 A 内部去创建、修改或者注销另一个对象 B，这会导致对象之间非常复杂的依赖关系，不利于代码的维护更新。</p>
+<p>比如我们直接在上层类内调用了底层类的构造方法，一旦底层类的构造方法发生改变，就必须修改所有上层类的代码。</p>
+<p><img src="/%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB.png"></p>
+<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><p>( Dependency Injection ) 我们用依赖注入的方式来降低耦合度。所谓依赖注入，就是把底层对象作为参数传入上层对象。避免底层类被修改后上层类代码也要随之改动。我们一般通过构造方法或者 setter 方法注入底层对象。</p>
+<ol>
+<li><p>设值注入：依赖的对象通过 setter 方法传入的，对象已经实例化，发生属性填充和依赖注入的时候。</p>
+</li>
+<li><p>构造注入：依赖的对象是通过构造器传入，发生在实例化 Bean 的时候。</p>
+</li>
+</ol>
+<p><em>主要采用设值注入，性能更好更易读。但对于依赖关系无需变化的 Bean 采用构造注入。所有的依赖关系全部在构造器内设定。</em></p>
+<p><img src="/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.png"></p>
+<p>优势：使用依赖注入后，即使底层类发生变化，上层类代码也不必改动，大大降低了代码的耦合度。</p>
+<p>劣势：但这也导致了我们在初始化对象的过程中要书写复杂的代码。</p>
+<h3 id="控制反转"><a href="#控制反转" class="headerlink" title="控制反转"></a>控制反转</h3><p>( Inversion of Control ) 控制反转，将对象的管理权交给 IOC 容器。</p>
+<p>Spring 框架内会定义一个 IOC 容器类，通过其来统一管理对象的生命周期：创建、资源存取、注销；并自动维护对象间的依赖关系。用户只需要配置 XML 文件或者添加注解标明类之间的映射关系，初始化过程中的代码将由 IOC 容器自动完成。</p>
+<p>IOC 容器底层通过工厂模式和 Java 反射机制来实现：</p>
+<ol>
+<li>IOC 容器根据 XML 配置文件或者注解读取 Bean 中保存的对象信息。</li>
+<li>IOC 容器充当工厂类，利用 Java 反射机制读取需要生成哪些对象，来自动生成相应的对象。</li>
+</ol>
+<hr>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><h3 id="IOC-容器"><a href="#IOC-容器" class="headerlink" title="IOC 容器"></a>IOC 容器</h3><p>在 Spring 框架中已经定义了 ApplicationContext 和 BeanFactory 作为 IOC 容器类。其中 ApplicationContext是 BeanFactory 的子类，提供了事件发布、国际化信息支持等其他高级特性。</p>
+<p>我们可以通过 IOC 容器类的 setBean 方法创建 Bean ，也可以通过 getBean 方法把 Bean 实例化并使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testUser</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="comment">// 加载配置文件，创建 IOC 容器对象</span></span><br><span class="line">    <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;spring.xml&quot;</span>);</span><br><span class="line">    <span class="comment">// IOC 容器根据 Bean 创建对象实例</span></span><br><span class="line">    <span class="type">Person</span> <span class="variable">newUser</span> <span class="operator">=</span> (Person) context.getBean(<span class="string">&quot;person&quot;</span>);</span><br><span class="line">    <span class="comment">// 调用对象方法</span></span><br><span class="line">    System.out.print(newUser.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java-Bean"><a href="#Java-Bean" class="headerlink" title="Java Bean"></a>Java Bean</h3><p>Java Bean 就是程序中被管理的对象在 IOC 容器中的代理，记录了对象信息。</p>
+<p>Bean 包含以下参数：Bean 名称(name) 、所代理的类(class) 、以及作用域(scope)。</p>
+<h4 id="Bean-的作用域"><a href="#Bean-的作用域" class="headerlink" title="Bean 的作用域"></a>Bean 的作用域</h4><ul>
+<li><strong>singleton 单例模式</strong>（默认）： 在整个 IoC 容器中，Bean 只有一个对象实例。</li>
+<li><strong>prototype 原型模式</strong>： 每次调用 Ioc 容器的 getBean 方法，都将产生一个新的对象实例。</li>
+<li><strong>request</strong>： 对于每次 HTTP 请求，Bean 都将产生一个新的对象实例。</li>
+<li><strong>session</strong>： 对于每个 HTTP Session，Bean 都将产生一个新的对象实例。</li>
+<li><strong>global session</strong>： 对于每个全局的 HTTP Session，Bean 都将产生一个新的对象实例。</li>
+</ul>
+<h4 id="Bean-的生命周期"><a href="#Bean-的生命周期" class="headerlink" title="Bean 的生命周期"></a>Bean 的生命周期</h4><p>Spring 对 Bean 方法进行了抽象和封装，开发者只需要进行配置和调用简单接口，具体实现都交付给 Spring 工厂来管理。</p>
+<p>在调用 getBean 方法时，Spring 的工作流大致可分为以下两步：</p>
+<ol>
+<li>解析：读 xml 配置，扫描类文件，从配置或者注解中获取 Bean 的定义信息，注册一些扩展功能。</li>
+<li>加载：通过解析完的定义信息获取 Bean 实例。</li>
+</ol>
+<p><img src="/bean.png"></p>
+<p>获取 BeanName，对传入的 name 进行解析，转化为可以从 Map 中获取到 BeanDefinition 的 bean name。<br>合并 Bean 定义，对父类的定义进行合并和覆盖，如果父类还有父类，会进行递归合并，以获取完整的 Bean 定义信息。<br>实例化，使用构造或者工厂方法创建 Bean 实例。<br>属性填充，寻找并且注入依赖，依赖的 Bean 还会递归调用 getBean 方法获取。<br>初始化，调用自定义的初始化方法。<br>获取最终的 Bean，如果是 FactoryBean 需要调用 getObject 方法，如果需要类型转换调用 TypeConverter 进行转化。</p>
+<h4 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h4><p>三个类 A、B、C，然后 A 关联 B，B 关联 C，C 又关联 A，这就形成了一个循环依赖。如果是方法调用是不算循环依赖的，循环依赖必须要持有引用。</p>
+<ol>
+<li>构造器循环依赖。依赖的对象是通过构造器传入的，发生在实例化 Bean 的时候。</li>
+</ol>
+<p>无法解决</p>
+<ol start="2">
+<li>设值循环依赖。依赖的对象是通过 setter 方法传入的，对象已经实例化，发生属性填充和依赖注入的时候。</li>
+</ol>
+<p>Spring 框架只支持单例下的设值循环依赖。原型模式检测到循环依赖会直接抛出 BeanCurrentlyInCreationException 异常。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9ea61d204559">https://www.jianshu.com/p/9ea61d204559</a></p>
+<hr>
+<h2 id="IOC-注解详解"><a href="#IOC-注解详解" class="headerlink" title="IOC 注解详解"></a>IOC 注解详解</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>为类添加 <code>@Configuration</code> 注解，表示该类为配置类。起到类似 XML 文件的作用，配置 IOC 容器用来管理 Bean。</p>
+<h4 id="组件扫描"><a href="#组件扫描" class="headerlink" title="组件扫描"></a>组件扫描</h4><p>为配置类添加 <code>@ComponentScan</code> 注解，启用组件扫描。配置类将根据注解向 IOC 容器添加 Bean，默认扫描本类中的 @Bean 方法。</p>
+<p>可以指定需要扫描的包，这会扫描包内的所有组件。如 <code>@ComponentScan(value=&quot;com.company.project&quot;)</code>。</p>
+<h3 id="注册-setBean"><a href="#注册-setBean" class="headerlink" title="注册 (setBean)"></a>注册 (setBean)</h3><ul>
+<li><strong>为类添加 <code>@Component</code> 注解</strong></li>
+</ul>
+<p>表示该类型被注册为 Bean 。Bean 的名称默认为类名的首字母小写，作用域默认为单例模式。</p>
+<ol>
+<li><p>可以为注册的 Bean 指定名称，等同于 <code>@Component(&quot;car&quot;)</code> 。</p>
+</li>
+<li><p>可以为注册的 Bean 指定作用域，如 <code>@Component(&quot;prototype&quot;)</code> 。</p>
+</li>
+</ol>
+<p>在 Spring MVC 中，我们可以把 <code>@Component</code> 细化为：</p>
+<ul>
+<li><code>@Controller</code> 注解：表示展示层的 Bean</li>
+<li><code>@Service</code> 注解：表示业务层的 Bean</li>
+<li><code>@Repository</code> 注解：表示数据访问层的 Bean</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope(&quot;prototype&quot;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span> <span class="keyword">implements</span> <span class="title class_">Vehicle</span>&#123;</span><br><span class="line">    <span class="meta">@AutoWired</span></span><br><span class="line">    <span class="keyword">private</span> FrameWork frameWork;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>为方法添加 <code>@Bean</code> 注解</strong></li>
+</ul>
+<p>方法返回类型将被注册为 Bean。Bean 的名称默认为方法名，作用域默认为单例模式。</p>
+<ul>
+<li><p>可以为注册的 Bean 指定名称，等同于 <code>@Bean(name = &quot;myFoo&quot;)</code> 。</p>
+</li>
+<li><p>主要用在 @Configuration 注解的类里，也可以用在 @Component 注解的类里。</p>
+</li>
+</ul>
+<h3 id="装配-getBean"><a href="#装配-getBean" class="headerlink" title="装配 (getBean)"></a>装配 (getBean)</h3><ul>
+<li><strong>为对象添加 <code>@Autowired</code> 注解</strong></li>
+</ul>
+<p>表示自动装配。在使用对象时 Spring 将<strong>根据类型</strong>自动查找 Bean 去创建对象，无法找到 Bean 则抛出异常。</p>
+<ol>
+<li><p>如果想要在无法找到 Bean 时返回 null 值，则将注解改为 <code>@Autowired(required=false)</code> 。</p>
+</li>
+<li><p>如果自动装配对象的类型是接口，而配置的实现类 Bean 有多个。则必须用 <code>@Qualifier</code> 注解来指定 Bean 的名称。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;car&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Vehicle vehicle;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><strong>为对象添加 <code>@Resource</code> 注解</strong></li>
+</ul>
+<p>表示自动装配。默认按对象名称去查找 Bean，找不到再按类型去查找 Bean。</p>
+<ol>
+<li><p>注解可以指定按名称或者类型去查找 Bean，如 <code>@Resource(name=&quot;car&quot;)</code> 或者 <code>@Resource(type=Car.class)</code>。</p>
+</li>
+<li><p>也可以同时按名称和类型查找 Bean，任何一个不匹配都将报错。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Resource(name=&quot;car&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Vehicle vehicle;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>@Autowired 是 Spring 的注解，@Resource 是 J2EE 的注解。</p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/11/07/SpringAOP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">&#39;SpringAOP&#39;</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2024 Camellia
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+
+
+  </div>
+</body>
+</html>
